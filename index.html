@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fff7f0" />
+  <meta name="description" content="Album kecil berisi cerita, foto, dan kenangan kita." />
+  <title>Our Little World ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fff8f1;
+      --paper: #fffdf9;
+      --pink: #f3c9cf;
+      --pink-deep: #d98291;
+      --rose: #b96576;
+      --ink: #59464a;
+      --muted: #8c7779;
+      --line: #eadbd5;
+      --shadow: 0 18px 45px rgba(116, 73, 77, .10);
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', Arial, sans-serif;
+      --hand: 'Caveat', cursive;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0; color: var(--ink); font-family: var(--sans); line-height: 1.65;
+      background-color: var(--cream);
+      background-image: radial-gradient(rgba(188, 137, 130, .12) .65px, transparent .65px),
+        radial-gradient(ellipse at 10% 15%, rgba(247, 211, 209, .48), transparent 32%),
+        radial-gradient(ellipse at 92% 48%, rgba(245, 224, 205, .48), transparent 30%);
+      background-size: 9px 9px, auto, auto;
+      overflow-x: hidden;
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    button { font: inherit; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between;
+      gap: 18px; padding: 13px clamp(18px, 5vw, 70px); background: rgba(255, 249, 243, .84);
+      backdrop-filter: blur(16px); border-bottom: 1px solid rgba(228, 203, 197, .65);
+    }
+    .brand { font-family: var(--serif); font-style: italic; font-size: 1.22rem; text-decoration: none; white-space: nowrap; }
+    .brand span { color: var(--rose); }
+    .nav { display: flex; align-items: center; gap: clamp(12px, 2.5vw, 28px); font-size: .82rem; color: var(--muted); }
+    .nav a { text-decoration: none; transition: color .2s; }
+    .nav a:hover { color: var(--rose); }
+    .tiny-heart { color: var(--pink-deep); font-size: 1.3rem; }
+    .container { width: min(1120px, calc(100% - 38px)); margin-inline: auto; }
+    .hero { min-height: 660px; display: grid; place-items: center; padding: 74px 0 80px; position: relative; }
+    .hero-inner { display: grid; grid-template-columns: 1.03fr .97fr; gap: clamp(20px, 5vw, 70px); align-items: center; width: 100%; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .22em; font-size: .68rem; font-weight: 700; color: var(--rose); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font: 600 clamp(3rem, 7.5vw, 6.5rem)/1.02 var(--serif); letter-spacing: -.055em; margin: 15px 0 20px; }
+    h1 em { color: var(--rose); font-weight: 500; }
+    .hero-copy { max-width: 490px; color: var(--muted); font-size: 1.03rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 700; font-size: .86rem; text-decoration: none; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s; display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: #fffaf7; background: var(--rose); box-shadow: 0 8px 20px rgba(185, 101, 118, .24); }
+    .btn-primary:hover { background: #a95466; }
+    .btn-soft { background: rgba(255, 255, 255, .68); color: var(--rose); border: 1px solid #e9c9ca; }
+    .hero-note { font: 600 1.5rem var(--hand); color: var(--rose); margin-top: 24px; transform: rotate(-3deg); display: inline-block; }
+    .hero-collage { position: relative; min-height: 430px; }
+    .tape { position: absolute; width: 82px; height: 23px; background: rgba(236, 194, 186, .68); transform: rotate(-14deg); z-index: 3; top: -10px; left: 35%; }
+    .polaroid { background: #fffefa; padding: 12px 12px 47px; box-shadow: 0 14px 28px rgba(91, 60, 62, .15); position: absolute; width: min(67%, 300px); border: 1px solid rgba(116, 73, 77, .07); }
+    .polaroid img { display: block; width: 100%; height: 290px; object-fit: cover; background: #f1ded7; }
+    .polaroid figcaption { font: 600 1.45rem var(--hand); text-align: center; position: absolute; bottom: 7px; left: 8px; right: 8px; color: #84676a; }
+    .polaroid.one { left: 5%; top: 16px; transform: rotate(-8deg); z-index: 1; }
+    .polaroid.two { right: 4%; top: 105px; transform: rotate(8deg); z-index: 2; }
+    .polaroid.two img { height: 245px; }
+    .doodle { position: absolute; color: var(--rose); font: 600 2.5rem var(--hand); z-index: 4; }
+    .doodle.d1 { top: 3px; right: 0; transform: rotate(12deg); }
+    .doodle.d2 { bottom: 10px; left: 4%; transform: rotate(-12deg); }
+    .scroll-hint { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); color: #a68b8b; font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; }
+    .scroll-hint span { display: block; text-align: center; font-size: 1.2rem; animation: bob 1.8s infinite ease-in-out; }
+    .section { padding: 84px 0; position: relative; }
+    .section-heading { text-align: center; max-width: 650px; margin: 0 auto 44px; }
+    .section-heading h2 { font: 600 clamp(2.1rem, 5vw, 3.65rem)/1.13 var(--serif); margin: 11px 0 13px; letter-spacing: -.035em; }
+    .section-heading p { color: var(--muted); margin-bottom: 0; }
+    .section-heading .script { font: 600 1.35rem var(--hand); color: var(--rose); }
+    .intro-card { background: rgba(255, 253, 249, .75); border: 1px solid var(--line); box-shadow: var(--shadow); padding: clamp(24px, 5vw, 48px); border-radius: 5px 34px 5px 34px; display: grid; grid-template-columns: .7fr 1.3fr; gap: 34px; align-items: center; max-width: 900px; margin: 0 auto; position: relative; }
+    .intro-stamp { aspect-ratio: 1; max-width: 190px; width: 100%; border: 1px dashed #cc9ea1; border-radius: 50%; display: grid; place-items: center; margin: auto; color: var(--rose); background: #fff5f0; position: relative; }
+    .intro-stamp::before { content: '♡'; font-size: 5rem; line-height: 1; }
+    .intro-stamp::after { content: 'MADE WITH LOVE'; position: absolute; font-size: .6rem; letter-spacing: .18em; bottom: 29px; }
+    .intro-card h3 { font: italic 500 1.9rem var(--serif); margin-bottom: 10px; }
+    .intro-card p { color: var(--muted); margin-bottom: 0; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px 28px; align-items: start; }
+    .gallery-item { background: #fffefa; padding: 11px 11px 43px; box-shadow: 0 12px 25px rgba(91, 60, 62, .11); position: relative; cursor: zoom-in; border: 1px solid rgba(116, 73, 77, .06); transition: transform .25s, box-shadow .25s; }
+    .gallery-item:nth-child(3n + 1) { transform: rotate(-2.5deg); }
+    .gallery-item:nth-child(3n + 2) { transform: rotate(2deg); margin-top: 24px; }
+    .gallery-item:nth-child(3n) { transform: rotate(-1deg); margin-top: 8px; }
+    .gallery-item:hover { transform: rotate(0) translateY(-6px) !important; box-shadow: 0 18px 32px rgba(91, 60, 62, .16); }
+    .gallery-item img { width: 100%; height: 270px; object-fit: cover; display: block; background: #f3e1dc; }
+    .gallery-item .caption { position: absolute; bottom: 7px; left: 10px; right: 10px; text-align: center; font: 600 1.42rem var(--hand); color: #84676a; }
+    .pin { width: 13px; height: 13px; position: absolute; top: 5px; left: calc(50% - 6px); border-radius: 50%; background: #d89aa0; box-shadow: inset -2px -2px 2px rgba(107, 40, 55, .18), 0 2px 3px rgba(0,0,0,.1); z-index: 2; }
+    .gallery-tip { text-align: center; font-size: .82rem; color: #a28c8c; margin-top: 28px; }
+    .timeline-wrap { max-width: 780px; margin: auto; position: relative; }
+    .timeline-wrap::before { content: ''; position: absolute; top: 8px; bottom: 10px; left: 50%; width: 1px; background: #ddb9b7; }
+    .timeline-item { width: 50%; padding: 0 42px 42px 0; position: relative; }
+    .timeline-item:nth-child(even) { margin-left: 50%; padding: 0 0 42px 42px; }
+    .timeline-item::after { content: '♡'; position: absolute; top: 3px; right: -14px; width: 28px; height: 28px; display: grid; place-items: center; color: var(--rose); background: var(--cream); border: 1px solid #e3b6b7; border-radius: 50%; font-size: 1rem; }
+    .timeline-item:nth-child(even)::after { right: auto; left: -14px; }
+    .timeline-date { color: var(--rose); font-size: .69rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+    .timeline-card { border: 1px solid var(--line); border-radius: 5px 22px 5px 22px; background: rgba(255,253,249,.85); padding: 23px; box-shadow: 0 10px 25px rgba(116,73,77,.06); }
+    .timeline-card h3 { font: 600 1.4rem var(--serif); margin: 7px 0 8px; }
+    .timeline-card p { color: var(--muted); font-size: .92rem; margin: 0; }
+    .letter-section { background: linear-gradient(135deg, rgba(248, 224, 220, .55), rgba(255, 247, 239, .35)); border-top: 1px solid rgba(233,207,200,.65); border-bottom: 1px solid rgba(233,207,200,.65); }
+    .letter-area { max-width: 760px; margin: auto; display: grid; place-items: center; }
+    .envelope { width: min(100%, 460px); min-height: 255px; background: #f3d2cf; position: relative; border-radius: 7px; box-shadow: 0 20px 42px rgba(124, 76, 80, .14); display: grid; place-items: center; cursor: pointer; overflow: hidden; border: 1px solid #e3b9b6; }
+    .envelope::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 58%; background: #e8babe; clip-path: polygon(0 0, 100% 0, 50% 100%); z-index: 2; }
+    .envelope::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 52%; background: #f7dfda; clip-path: polygon(0 0, 100% 100%, 0 100%); z-index: 1; }
+    .envelope-front { position: absolute; bottom: 0; right: 0; width: 100%; height: 52%; background: #f4d3ce; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index: 1; }
+    .seal { width: 61px; height: 61px; border-radius: 50%; background: var(--rose); color: white; display: grid; place-items: center; font-size: 1.7rem; position: relative; z-index: 3; box-shadow: 0 4px 10px rgba(113,49,65,.2); transition: transform .25s; }
+    .envelope:hover .seal { transform: scale(1.08) rotate(-8deg); }
+    .envelope-label { font: 600 1.3rem var(--hand); color: #83535d; position: absolute; bottom: 15px; z-index: 4; }
+    .letter-paper { display: none; max-width: 680px; width: 100%; margin-top: 28px; padding: clamp(24px, 5vw, 46px); background: #fffdf8; border: 1px solid #e9d6c9; box-shadow: var(--shadow); position: relative; background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(216, 174, 168, .20) 32px); animation: rise .65s ease both; }
+    .letter-paper.open { display: block; }
+    .letter-paper h3 { font: italic 500 1.9rem var(--serif); color: var(--rose); }
+    .letter-paper p { white-space: pre-line; color: #765f62; }
+    .letter-sign { text-align: right; font: 600 1.6rem var(--hand); color: var(--rose); }
+    .music-card { max-width: 770px; margin: auto; display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 28px; padding: 26px; border-radius: 26px; border: 1px solid #ead4d0; background: rgba(255,253,249,.86); box-shadow: var(--shadow); }
+    .album-art { height: 170px; border-radius: 18px; background: linear-gradient(145deg, #e7b5b8, #f8e4d6); display: grid; place-items: center; color: white; position: relative; overflow: hidden; }
+    .album-art::before, .album-art::after { content: '♡'; position: absolute; font-size: 6rem; color: rgba(255,255,255,.23); transform: rotate(-15deg); }
+    .album-art::after { font-size: 2.4rem; top: 15px; right: 21px; transform: rotate(14deg); }
+    .album-art span { font: italic 500 1.8rem var(--serif); z-index: 1; text-shadow: 0 2px 9px rgba(112,68,75,.2); }
+    .music-info h3 { font: 600 1.85rem var(--serif); margin: 0 0 2px; }
+    .music-info .artist { color: var(--rose); margin-bottom: 11px; font-size: .9rem; }
+    .music-info p { color: var(--muted); font-size: .9rem; margin-bottom: 17px; }
+    .music-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .music-status { color: #a28c8c; font-size: .76rem; }
+    .youtube-frame { display: none; grid-column: 1 / -1; width: 100%; margin-top: 20px; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; box-shadow: 0 8px 22px rgba(50,35,35,.12); }
+    .youtube-frame.visible { display: block; }
+    .youtube-frame iframe { width: 100%; height: 100%; border: 0; }
+    .footer { text-align: center; padding: 48px 20px 55px; color: #a48c8b; font-size: .83rem; }
+    .footer .big-heart { font-size: 2rem; color: var(--rose); margin-bottom: 6px; }
+    .footer p { margin: 0; }
+    .floating-heart { position: fixed; z-index: 50; bottom: -30px; pointer-events: none; color: #d98899; animation: floatHeart linear forwards; filter: drop-shadow(0 2px 2px rgba(151,79,96,.12)); }
+    .photo-modal { position: fixed; inset: 0; background: rgba(45, 29, 32, .78); z-index: 80; display: none; place-items: center; padding: 24px; backdrop-filter: blur(7px); }
+    .photo-modal.open { display: grid; }
+    .photo-modal img { max-width: min(920px, 92vw); max-height: 80vh; object-fit: contain; border: 11px solid #fffdf8; border-bottom-width: 42px; box-shadow: 0 20px 80px rgba(0,0,0,.3); transform: rotate(-1deg); }
+    .modal-close { position: absolute; top: 20px; right: 22px; border: 1px solid rgba(255,255,255,.55); color: white; background: transparent; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 1.4rem; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    @keyframes floatHeart { from { transform: translateY(0) rotate(0) scale(.75); opacity: 0; } 10% { opacity: .85; } to { transform: translateY(-110vh) rotate(30deg) scale(1.25); opacity: 0; } }
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    @keyframes rise { from { opacity: 0; transform: translateY(22px) rotate(1deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
+    @media (max-width: 760px) {
+      .topbar { padding: 12px 17px; }
+      .nav { gap: 13px; font-size: .75rem; }
+      .nav a:nth-child(2) { display: none; }
+      .hero { min-height: auto; padding: 60px 0 82px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 14px; }
+      .hero-copy { font-size: .96rem; }
+      .hero-collage { width: min(100%, 450px); margin: 10px auto 0; min-height: 390px; }
+      .polaroid { width: 62%; }
+      .polaroid img { height: 250px; }
+      .polaroid.two { top: 90px; }
+      .polaroid.two img { height: 210px; }
+      .section { padding: 65px 0; }
+      .intro-card { grid-template-columns: 1fr; text-align: center; gap: 23px; }
+      .intro-stamp { max-width: 145px; }
+      .intro-stamp::before { font-size: 4rem; }
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px 17px; }
+      .gallery-item:nth-child(n) { margin-top: 0; }
+      .gallery-item img { height: 205px; }
+      .gallery-item .caption { font-size: 1.23rem; }
+      .timeline-wrap::before { left: 12px; }
+      .timeline-item, .timeline-item:nth-child(even) { width: 100%; margin-left: 0; padding: 0 0 28px 40px; }
+      .timeline-item::after, .timeline-item:nth-child(even)::after { left: -1px; right: auto; }
+      .music-card { grid-template-columns: 92px 1fr; gap: 16px; padding: 17px; }
+      .album-art { height: 92px; border-radius: 13px; }
+      .album-art span { font-size: 1.2rem; }
+      .album-art::before { font-size: 4rem; }
+      .music-info h3 { font-size: 1.45rem; }
+      .music-info p { font-size: .82rem; }
+      .music-info .btn { padding: 10px 14px; font-size: .78rem; }
+    }
+    @media (max-width: 420px) {
+      .brand { font-size: 1.05rem; }
+      .nav { gap: 10px; font-size: .7rem; }
+      .gallery-grid { gap: 20px 12px; }
+      .gallery-item { padding: 7px 7px 36px; }
+      .gallery-item img { height: 160px; }
+      .hero-collage { min-height: 330px; }
+      .polaroid { padding: 8px 8px 36px; }
+      .polaroid img { height: 206px; }
+      .polaroid.two img { height: 176px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">our little <span>world ♡</span></a>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="#cerita">Cerita</a><a href="#kenangan">Kenangan</a><a href="#timeline">Perjalanan</a><a href="#surat">Surat</a><a href="#musik">Our song</a>
+    </nav>
+    <span class="tiny-heart" aria-hidden="true">♡</span>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-inner">
+        <div class="reveal show">
+          <div class="eyebrow">a little scrapbook of us</div>
+          <h1>Somewhere<br />in this world,<br /><em>it's you.</em></h1>
+          <p class="hero-copy">Untuk kamu, Fahsa Aula Nasaul Husna, seseorang yang membuat hal-hal sederhana terasa istimewa. Ini adalah album kecil tentang kita, tentang tawa, cerita, dan momen yang ingin selalu ku simpan.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#kenangan">Lihat kenangan <span>♡</span></a>
+            <button class="btn btn-soft" id="heartButton" type="button">Kirim banyak hati ✧</button>
+          </div>
+          <div class="hero-note">a thousand little reasons to love you</div>
+        </div>
+        <div class="hero-collage reveal show" aria-label="Kolase foto kenangan">
+          <span class="tape" aria-hidden="true"></span>
+          <figure class="polaroid one">
+            <!-- GANTI src dengan foto kalian, misalnya: images/kenangan-1.jpg -->
+            <img src="kenangan1.jpeg" alt="Contoh foto pasangan berpelukan" />
+            <figcaption>my favorite person</figcaption>
+          </figure>
+          <figure class="polaroid two">
+            <!-- GANTI src dengan foto kalian, misalnya: images/kenangan-2.jpg -->
+            <img src="kenangan1.jpeg" alt="Momen pertama kali dhika melihat nanayy yang sangat cantikk sekali" />
+            <figcaption>Dhika melihat nanay pertama kali</figcaption>
+          </figure>
+          <span class="doodle d1" aria-hidden="true">♡</span><span class="doodle d2" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="scroll-hint">scroll to remember <span>⌄</span></div>
+    </section>
+
+    <section class="section container" id="cerita">
+      <div class="section-heading reveal">
+        <div class="eyebrow">dear</div><h2>My Baby Fahsa Aula Nasaul Husna</h2>
+        <p>Kita menjalani hubungan ini menuju 4 tahun, aku minta maaf semua perlakuan ku yang banyak kasar sama kamu, banyak nyakitin hati kamu, sering php, ketidak konsistenan, aku sadar semua hal yang aku lakukan ke kamu, aku sadar apa yang kamu butuhkan dari arti pasangan, aku sadar apa yang kamu harapkan dari aku, aku akan terus memperbaiki diri, dan membuktikan ke kamu, bahwa aku akan menjadi orang yang paling kamu harapkan, paling penting untuk dirimu, dan paling bisa membahagiakan dirimu, i will always love you sweetheart .</p>
+      </div>
+      <article class="intro-card reveal">
+        <div class="intro-stamp" aria-hidden="true"></div>
+        <div><h3>“Arti rumah untukku adalah kamu.”</h3><p>Aku akan selalu mengingat bukan cuma hari-hari besar, tetapi juga hal kecil yang akan membahagiakanmu, obrolan yang nggak ada habisnya, candaan receh, perjalanan pergi dan pulang serta cara nanay membuat hari biasa jadi terasa hangat. Semoga halaman ini bisa jadi tempat kecil untuk menyimpan memori memori hingga kita menikah dan menua nanti.</p></div>
+      </article>
+    </section>
+
+    <section class="section container" id="kenangan">
+      <div class="section-heading reveal">
+        <div class="eyebrow">captured in little frames</div><h2>Pertemuan kita</h2>
+        <p>Setiap foto menyimpan cerita yang mungkin sederhana bagi dunia, tapi sangat berarti buat kita.</p><div class="script">tap a photo to see it closer ♡</div>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: hari yang manis"><span class="pin"></span><img src="kenangan2.jpeg" alt="Contoh momen bahagia bersama" /><figcaption class="caption">diriku yg merasa special♡</figcaption></figure>
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: our little date"><span class="pin"></span><img src="kenangan5.jpeg" alt="Contoh suasana kencan" /><figcaption class="caption">Chat pertama kita</figcaption></figure>
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: tempat favorit"><span class="pin"></span><img src="kenangan3.jpeg" alt="Contoh pemandangan perjalanan" /><figcaption class="caption">Pap pertama dari kamu</figcaption></figure>
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: senyum kamu"><span class="pin"></span><img src="kenangan4.jpeg" alt="Contoh foto pasangan" /><figcaption class="caption">Date pertama kita hahaha ✿</figcaption></figure>
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: little adventures"><span class="pin"></span><img src="kenangan6.jpeg" alt="Contoh pemandangan petualangan" /><figcaption class="caption">First gift</figcaption></figure>
+        <figure class="gallery-item reveal" tabindex="0" role="button" aria-label="Perbesar foto: to more memories"><span class="pin"></span><img src="kenangan7.jpeg" alt="Contoh momen bersama teman dan orang tersayang" /><figcaption class="caption">detik detik sebelum.... ♡</figcaption></figure>
+      </div>
+      <p class="gallery-tip"></p>
+    </section>
+
+    <section class="section container" id="timeline">
+      <div class="section-heading reveal">
+        <div class="eyebrow">chapter by chapter</div><h2>Our story so far</h2>
+        <p>Perjalanan yang diawali dengan tidak sengaja melirik perempuan yang sangat cantik dan berkomunikasi untuk pertama kalinya.</p>
+      </div>
+      <div class="timeline-wrap">
+        <article class="timeline-item reveal"><div class="timeline-date">12 Maret 2023</div><div class="timeline-card"><div>🌷</div><h3>Dimulai ketika</h3><p>Adanya acara himpunan kemahasiswaan yang wajib dihadiri oleh maba, dan disitu kita maba nya haha, meski awalnya kita sama sama ragu untuk hadir diacara karena adanya kendala, tidak disangka menjadi pertemuan kita untuk pertama kalinya.</p></div></article>
+        <article class="timeline-item reveal"><div class="timeline-date">22 Mei 2023</div><div class="timeline-card"><div>💌</div><h3>The day we became “us”</h3><p>Momen ketika nanay yang terjebak hujan di mesjid telkom, dan diriku yang secara sadar tidak mau membiarkan nanayy kehujanan, diriku menghampiri nya dengan membawakan jaket untuk menutup kepala nya nanayy, karena tidak ada payung si hahaha, perasaanku yang tidak bisa lagi kutahan akhirnya disitu dhika utarakan bahwa dhika suka sama nanayy.</p></div></article>
+        <article class="timeline-item reveal"><div class="timeline-date">13 Juli 2023</div><div class="timeline-card"><div>📸</div><h3>A day to remember</h3><p>Momen pertama kali kerumah kamuu, jujur deg deg an bangett woii hahaha, karena bertemu dengan orang tua nya, takut bangett karena first time bangett, dan jujur takut juga awalnya sama orang tua kamu takut aku membawa kesan buruk hahaha.</p></div></article>
+        <article class="timeline-item reveal"><div class="timeline-date">today & always</div><div class="timeline-card"><div>♡</div><h3>Still choosing you</h3><p>Aku akan terus belajar memperbaiki diri, memahami kamu, tidak mengecewakan kamu, agar aku bisa menjadi orang yang paling kamu harapkan, kamu cintai, kamu sayangi dan kamu sukai hehe:d.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section letter-section" id="surat">
+      <div class="container">
+        <div class="section-heading reveal"><div class="eyebrow">sealed with a kiss</div><h2>A little letter for you</h2><p>Ada sesuatu yang ingin dhika sampaikan. Buka amplopnya, ya.</p></div>
+        <div class="letter-area reveal">
+          <button class="envelope" id="envelopeButton" type="button" aria-expanded="false" aria-controls="letterPaper">
+            <span class="seal">♡</span><span class="envelope-front" aria-hidden="true"></span><span class="envelope-label">for my favorite person</span>
+          </button>
+          <article class="letter-paper" id="letterPaper" aria-live="polite">
+            <h3>Untuk kamu, sayangkuu Fahsa Aula Nasaul Husna ♡</h3>
+            <p>Aku mungkin nggak selalu pandai menyusun kata, tapi aku ingin kamu tahu kalau kehadiranmu sangat berarti buat dhika.
+
+Terima kasih sudah menjadi bagian dari hari-hariku. Terima kasih untuk tawa, cerita, perhatian , dan semua momen yang kita lewati bersama. Aku tahu hubungan bukan cuma soal hari-hari manis; ada juga hari yang membuat nanay capek, nanay kecewa dan hal-hal lain nya.
+
+Di hari baik maupun hari yang terasa berat, aku ingin terus belajar jadi tempat yang nyaman untukmu. Aku akan menjadi yang terbaik agar diakui oleh dirimu bahwa aku layak menjadi kepala keluarga kita, aku terus mencoba untuk saling mendengar, memahami, dan menjaga satu sama lain.
+
+Semoga ketika nanay melihat ini nanay akan happyy, meskipun mungkin sesuatu seperti ini hanya receh, tapi aku serius dalam menata isi pada web ini.Terimakasih banyak yaa sayangg selalu percaya dan sayangg sama diriku, aku sangatt sayangg dan cinta sama kamuu mmwahh.</p>
+            <div class="letter-sign">with all my love,<br />your favorite human ♡</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="musik">
+      <div class="section-heading reveal"><div class="eyebrow">our little soundtrack</div><h2>And this song is for you</h2><p>Lagu yang untuk kita punya kenangan, Lagu ini salah satunya.</p></div>
+      <div class="music-card reveal">
+        <div class="album-art" aria-hidden="true"><span>My Love</span></div>
+        <div class="music-info"><h3>My Love</h3><div class="artist">Westlife · Official Music Video</div><p>Putar melalui video resmi Westlife di YouTube. Musik tidak berjalan otomatis—tekan tombol di bawah untuk mulai.</p><div class="music-controls"><button class="btn btn-primary" id="playMusic" type="button">▶ Putar My Love</button><button class="btn btn-soft" id="hideMusic" type="button" hidden>× Tutup pemutar</button></div><div class="music-status" id="musicStatus" aria-live="polite">Belum diputar · siapkan hati ♡</div></div>
+        <div class="youtube-frame" id="youtubeFrame"></div>
+      </div>
+      <p class="gallery-tip">Pemutar menggunakan video resmi yang tersedia di YouTube. Pemutaran dapat bergantung pada koneksi internet, pengaturan browser, atau ketersediaan video di wilayahmu.</p>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="big-heart">♡</div><p>made with love, just for us.</p><p style="margin-top:5px;font:600 1.25rem var(--hand);">every love story is beautiful, but ours is my favorite.</p></footer>
+
+  <div class="photo-modal" id="photoModal" role="dialog" aria-modal="true" aria-label="Foto kenangan diperbesar"><button class="modal-close" id="closeModal" type="button" aria-label="Tutup foto">×</button><img id="modalImage" alt="Foto kenangan diperbesar" /></div>
+
+  <script>
+    // ===================== BAGIAN MUDAH DISESUAIKAN =====================
+    // 1) Ganti foto contoh pada atribut src di elemen <img> di atas.
+    //    Bisa gunakan URL foto atau file lokal, misalnya src="images/kenangan-1.jpg".
+    // 2) Ubah caption pada setiap <figcaption>.
+    // 3) Sesuaikan tanggal dan cerita di bagian timeline.
+    // 4) Ubah isi surat langsung pada elemen #letterPaper.
+    // ================================================================
+
+    // Efek hati melayang untuk tombol dan sesekali di latar.
+    const heartSymbols = ['♡', '♥', '✧', '💕'];
+    function createHeart() {
+      const heart = document.createElement('span');
+      heart.className = 'floating-heart';
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = (Math.random() * 100) + 'vw';
+      heart.style.fontSize = (14 + Math.random() * 23) + 'px';
+      heart.style.animationDuration = (5 + Math.random() * 4) + 's';
+      document.body.appendChild(heart);
+      window.setTimeout(() => heart.remove(), 9500);
+    }
+    document.getElementById('heartButton').addEventListener('click', () => {
+      for (let i = 0; i < 22; i++) window.setTimeout(createHeart, i * 90);
+    });
+    window.setInterval(() => { if (Math.random() > 0.45) createHeart(); }, 1700);
+
+    // Animasi saat bagian halaman mulai terlihat.
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal:not(.show)').forEach(el => revealObserver.observe(el));
+
+    // Klik foto Polaroid untuk melihat versi lebih besar.
+    const photoModal = document.getElementById('photoModal');
+    const modalImage = document.getElementById('modalImage');
+    function openPhoto(item) {
+      const img = item.querySelector('img');
+      if (!img) return;
+      modalImage.src = img.src;
+      modalImage.alt = img.alt || 'Foto kenangan';
+      photoModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('closeModal').focus();
+    }
+    function closePhoto() {
+      photoModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => openPhoto(item));
+      item.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openPhoto(item); }
+      });
+    });
+    document.getElementById('closeModal').addEventListener('click', closePhoto);
+    photoModal.addEventListener('click', event => { if (event.target === photoModal) closePhoto(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closePhoto(); });
+
+    // Buka/tutup surat cinta.
+    const envelopeButton = document.getElementById('envelopeButton');
+    const letterPaper = document.getElementById('letterPaper');
+    envelopeButton.addEventListener('click', () => {
+      const isOpen = letterPaper.classList.toggle('open');
+      envelopeButton.setAttribute('aria-expanded', String(isOpen));
+      envelopeButton.querySelector('.envelope-label').textContent = isOpen ? 'surat kecil untukmu ♡' : 'for my favorite person';
+      envelopeButton.querySelector('.seal').textContent = isOpen ? '♥' : '♡';
+      if (isOpen) letterPaper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    // Pemutar legal: embed video resmi Westlife dari YouTube, bukan file audio lokal.
+    // Sumber: Westlife - My Love (Official Video), https://www.youtube.com/watch?v=ulOb9gIGGd0
+    const playMusic = document.getElementById('playMusic');
+    const hideMusic = document.getElementById('hideMusic');
+    const youtubeFrame = document.getElementById('youtubeFrame');
+    const musicStatus = document.getElementById('musicStatus');
+    playMusic.addEventListener('click', () => {
+      if (!youtubeFrame.querySelector('iframe')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/ulOb9gIGGd0?autoplay=1&rel=0';
+        iframe.title = 'Westlife - My Love (Official Video)';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        youtubeFrame.appendChild(iframe);
+      } else {
+        const iframe = youtubeFrame.querySelector('iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/ulOb9gIGGd0?autoplay=1&rel=0';
+      }
+      youtubeFrame.classList.add('visible');
+      hideMusic.hidden = false;
+      musicStatus.textContent = 'Pemutar siap — selamat menikmati lagu kalian ♡';
+      youtubeFrame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    hideMusic.addEventListener('click', () => {
+      // Menghapus iframe menghentikan audio ketika pemutar ditutup.
+      youtubeFrame.replaceChildren();
+      youtubeFrame.classList.remove('visible');
+      hideMusic.hidden = true;
+      musicStatus.textContent = 'Pemutar ditutup · tekan putar untuk mendengarkan lagi';
+    });
+  </script>
+</body>
+</html>
